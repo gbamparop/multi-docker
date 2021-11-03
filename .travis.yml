@@ -1,4 +1,6 @@
 sudo: required
+language: generic
+
 services:
   - docker
 
@@ -9,14 +11,14 @@ script:
   - docker run -e CI=true gbamparop/react-test npm test
 
 after_success:
+  - docker build -t gbamparop/multi-client ./client
   - docker build -t gbamparop/multi-nginx ./nginx
   - docker build -t gbamparop/multi-server ./server
   - docker build -t gbamparop/multi-worker ./worker
-  - docker build -t gbamparop/multi-react ./client
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Push images to docker hub
+  # Take those images and push them to docker hub
+  - docker push gbamparop/multi-client
   - docker push gbamparop/multi-nginx
   - docker push gbamparop/multi-server
   - docker push gbamparop/multi-worker
-  - docker push gbamparop/multi-react
