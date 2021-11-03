@@ -18,5 +18,5 @@ after_success:
   # Push images to docker hub
   - docker push gbamparop/multi-client
   - docker push gbamparop/multi-nginx
-  - docker push gbamparop/multi-multi-server
+  - docker push gbamparop/multi-server
   - docker push gbamparop/multi-worker
